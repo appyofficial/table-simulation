@@ -16,7 +16,7 @@ function trackItem(x, y) {
         }
     }
     (x < 0 || y < 0) || (tableCells[x] === undefined || tableCells[y] === undefined) ?
-        itemFell() : tableCells[y][x].style.backgroundColor = 'green';
+        itemFell() : tableCells[y][x].style.backgroundColor = 'lightgreen';
 }
 
 //Moving items on table
@@ -62,14 +62,15 @@ function moveItem(x, y, commands) {
     commands.forEach(command => {
         if (command === 0) {
             try {
-                trackItem(x, y);
+                tableCells[y][x].style.backgroundColor = 'darkgreen';
+                tableCells[y][x].textContent = 'I am home';
                 throw (`The position of item is ${x},${y}`);
             } catch (result) {
                 console.log(result);
             }
         }
-        else if (command === 1) { moveForward(); }
-        else if (command === 2) { moveBackward() }
+        else if (command === 1) { moveForward(); trackItem(x, y); }
+        else if (command === 2) { moveBackward(); trackItem(x, y); }
         else if (command === 3) { turnRight() }
         else if (command === 4) { turnLeft() }
         else {
@@ -77,5 +78,5 @@ function moveItem(x, y, commands) {
             return 'Invalid command!'
         }
     });
-    trackItem(x, y);
+
 }
